@@ -43,28 +43,22 @@ const App = () => {
     if (countries.length >= 10)
       return 'Xin hay nhap cu the hon!'
 
-    if (countries.length === 1)
-      return countries.map(country => 
-        <div key={country.name.official}>
-            <h2>
-                {country.name.common}
-            </h2>
-            <img src= {country.flags.png? country.flags.png: country.flags.svg} alt={country.flags.alt} />
-            <div><b>Capital: </b>{country.capital}</div>
-            <div><b>Languages:</b></div>
-            <ul>
-              {Object
-                .entries(country.languages)
-                .map(([code, language]) => 
-                  <li key={`${country.name.official}${code}`}>{language}</li>)
-              }
-            </ul>
-        </div>)
-    
-      return countries.map(country => 
-        <h2 key={country.name.official}>
-          {country.name.common}
-        </h2>)
+    return countries.map(country => 
+      <div key={country.name.official}>
+          <h2>
+              {country.name.common}
+          </h2>
+          <img src= {country.flags.png? country.flags.png: country.flags.svg} alt={country.flags.alt} />
+          <div><b>Capital: </b>{country.capital}</div>
+          <div><b>Languages:</b></div>
+          <ul>
+            {Object
+              .entries(country.languages)
+              .map(([code, language]) => 
+                <li key={`${country.name.official}${code}`}>{language}</li>)
+            }
+          </ul>
+      </div>)
   }
 
   return(
