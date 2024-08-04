@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
-
+const api_key = import.meta.env.VITE_SOME_KEY;
+console.log(api_key);
 const App = () => {
   const [value, setValue] = useState('')
   const [data, setData] = useState([])
@@ -18,7 +19,6 @@ const App = () => {
     setFind(value)
     setValue('')
   }
-
   useEffect(() => {
     axios
       .get(`https://studies.cs.helsinki.fi/restcountries/api/all`)

@@ -1,13 +1,12 @@
 const Country = ({country, visible, handleVisible}) => {
     let display = {'display': 'block'}
     let hidden = {'display': 'none'}
-    console.log(999);
     return (
         <div>
-          <h2>
+          <h2 style={{'display': 'inline-block'}}>
               {country.name.common}
           </h2>
-          <button onClick={handleVisible}>{!visible? 'show': 'hide'}</button>
+          <button onClick={handleVisible}>{!visible? 'Show': 'Hide'}</button>
           <div style={visible? display: hidden}>
             <img src= {country.flags.png? country.flags.png: country.flags.svg} alt={country.flags.alt} />
             <div><b>Capital: </b>{country.capital}</div>
