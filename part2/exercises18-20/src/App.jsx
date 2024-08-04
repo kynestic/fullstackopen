@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Country from './components/Country'
 
 const App = () => {
   const [value, setValue] = useState('')
   const [data, setData] = useState([])
   const [find, setFind] = useState('')
   const [countries, setCountries] = useState([])
+  const [visible, setVisible] = useState([])
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -26,7 +28,7 @@ const App = () => {
   },[])
 
   useEffect(() => {
-    setCountries(data.filter(country => {
+    let newCountries = data.filter(country => {
       let name = country.name
       // console.log((name.common).toLowerCase());
       // console.log(find.toLowerCase());
@@ -36,29 +38,13 @@ const App = () => {
         return true
 
       return false
-    }))
+    })
+    setCountries(newCountries)
+    console.log(newCountries)
   }, [find])
 
-  const handleResult = () =>{
-    if (countries.length >= 10)
-      return 'Xin hay nhap cu the hon!'
-
-    return countries.map(country => 
-      <div key={country.name.official}>
-          <h2>
-              {country.name.common}
-          </h2>
-          <img src= {country.flags.png? country.flags.png: country.flags.svg} alt={country.flags.alt} />
-          <div><b>Capital: </b>{country.capital}</div>
-          <div><b>Languages:</b></div>
-          <ul>
-            {Object
-              .entries(country.languages)
-              .map(([code, language]) => 
-                <li key={`${country.name.official}${code}`}>{language}</li>)
-            }
-          </ul>
-      </div>)
+  const handleVisible = (name) => {
+    setVisible({...visible, [name]: !visible[name]})
   }
 
   return(
@@ -71,7 +57,7 @@ const App = () => {
       </form>
     </div>
 
-    {handleResult()}
+    {countries.map(country => <Country key={country.name.official} handleVisible={()=>{handleVisible(country.name.official)}} country = {country} visible = {visible[country.name.official]}/>)}
   </>
   )
 }
