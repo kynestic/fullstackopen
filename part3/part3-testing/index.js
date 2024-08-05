@@ -1,6 +1,8 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 let notes = [
@@ -69,6 +71,15 @@ app.post('/api/notes',(request, response) => {
     notes = notes.concat(note)
 
     response.json(note)
+})
+
+app.put('/api/notes/:id' , (request, response) => {
+  console.log(request.params.id);
+  let newNote = {...request.body}
+  notes = notes.map(note => {return note.id == request.params.id? newNote: note})
+  console.log(notes);
+  console.log(newNote);
+  response.status(200).json(newNote)
 })
 
 const PORT = 3001

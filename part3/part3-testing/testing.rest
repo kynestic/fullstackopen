@@ -1,8 +1,8 @@
-POST http://localhost:3001/api/notes/ HTTP/1.1
-content-type: application/json
+PUT http://localhost:3001/api/notes/1
+Content-Type: application/json
 
 {
-    "id":"",
-    "content": "",
-    "important": true
+    "id": "1",
+    "content": "HTML is easy",
+    "important": false
 }
