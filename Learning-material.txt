@@ -1,0 +1,89 @@
+
+HOW TO CREATE REACT PROJECT
+npm create vite@latest [folder_name] -- --template react
+cd [path of folder_name]
+npm install
+npm run dev
+
+
+INSTALL AXIOS FOR CREATING REST APT REQUEST TO SERVER
+npm install axios
+
+
+INSTALL JSON-SERVER FOR TEMPORARY DEVELOPMENT
+npm install json-server --save-dev
+json-server --port 3001 --watch db.json
+== npm run server [added in scripts: "server": "json-server -p3001 --watch [file_name]"]
+
+
+CREATE A SERVER WITH PURE NODE.JS
+const http = require('http')
+const app = http.createServer((request, response) => {
+  response.writeHead(200, { 'Content-Type': 'text/plain' }) //Define response header and response type
+  response.end('Hello World') //Write the body and end the body
+})
+const PORT = 3001
+app.listen(PORT)
+console.log(`Server running on port ${PORT}`)
+=>node [js-file_name]
+
+
+CREATE A SERVER WITH EXPRESS.JS
+npm install express
+const express = require('express')
+const app = express()
+app.use(express.json()) //Using json-parser to automatically recognize json data in body of request
+let notes = [
+  ...
+]
+app.get('/', (request, response) => {
+	//We can use res.type('[type]'); to set the response type (default is text/html)
+  response.send('<h1>Hello World!</h1>') //Express automatically set the Content-Type to text/html
+})
+app.get('/api/notes', (request, response) => {
+  response.json(notes) // Use json method will send the notes object as a json formatted string and the default Content-Type in this case is application/json
+	//In Nodejs we have to write this: response.end(JSON.stringify(notes))
+})
+app.get('/api/notes/:id', (request, response) => {
+  const id = request.params.id //We can access the id in the adress by params object in request
+  const note = notes.find(note => note.id === id)
+  response.json(note)
+})
+const generateId = () => {
+  const maxId = notes.length > 0
+    ? Math.max(...notes.map(n => Number(n.id)))
+    : 0
+  return String(maxId + 1)
+}
+app.post('/api/notes', (request, response) => {
+  const body = request.body
+
+  if (!body.content) {
+    return response.status(400).json({ 
+      error: 'content missing' 
+    })
+  }
+
+  const note = {
+    content: body.content,
+    important: Boolean(body.important) || false,
+    id: generateId(),
+  }
+
+  notes = notes.concat(note)
+
+  response.json(note)
+})
+const PORT = 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
+
+
+ABOUT EXPRESS.JSON() AND EXPRESS.URENCODED(), MIDDLEWARE EXPLAINATION
+https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded
+
+THE VISUAL STUDIO CODE REST CLIENT
+If you use Visual Studio Code, you can use the VS Code REST client plugin instead of Postman.
+Once the plugin is installed, using it is very simple. 
+We make a directory at the root of the application named requests. We save all the REST client requests in the directory as files that end with the .rest extension.
