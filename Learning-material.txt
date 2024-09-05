@@ -41,7 +41,8 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>') //Express automatically set the Content-Type to text/html
 })
 app.get('/api/notes', (request, response) => {
-  response.json(notes) // Use json method will send the notes object as a json formatted string and the default Content-Type in this case is application/json
+  response.json(notes)  // Use json method will send the notes object as a json 
+                        //  formatted string and the default Content-Type in this case is application/json
 	//In Nodejs we have to write this: response.end(JSON.stringify(notes))
 })
 app.get('/api/notes/:id', (request, response) => {
@@ -79,6 +80,7 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
+
 NODEMON FOR CONTINOUSLY TESTING WITH EXPRESSJS AND NODEJS
 npm install --save-dev nodemon
 Add this in script"
@@ -87,10 +89,42 @@ Add this in script"
 npm run dev
 
 
+MORGAN FOR LOGGING REQUEST AND RESPONSE
+morgan.token('body', (req) =>{//used for create new token beside default token
+    return req.method === 'POST'? JSON.stringify(req.body): ''
+})
+app.use(morgan(':method :url :status :res[content-size] :response-time ms :body')) //use a personal format, 
+you can use tiny or function etc
+
+
 ABOUT EXPRESS.JSON() AND EXPRESS.URENCODED(), MIDDLEWARE EXPLAINATION
 https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded
+
 
 THE VISUAL STUDIO CODE REST CLIENT
 If you use Visual Studio Code, you can use the VS Code REST client plugin instead of Postman.
 Once the plugin is installed, using it is very simple. 
-We make a directory at the root of the application named requests. We save all the REST client requests in the directory as files that end with the .rest extension.
+We make a directory at the root of the application named requests. We save all the REST client requests 
+in the directory as files that end with the .rest extension.
+
+
+CORS: CROSS-ORIGIN-RESOURCE-SHARING
+URL's origin is defined by the combination of protocol (AKA scheme), hostname, and port.
+For example:
+http://example.com:80/index.html
+  protocol: http
+  host: example.com
+  port: 80
+  
+According to W3C:
+Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page 
+to be requested from another domain outside the domain from which the first resource was served.
+We can allow requests from other origins by using Node's cors middleware.
+In your backend repository, install cors with the command:
+
+npm install corscopy
+
+take the middleware to use and allow for requests from all origins:
+
+const cors = require('cors')
+app.use(cors())

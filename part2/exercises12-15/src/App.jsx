@@ -5,8 +5,6 @@ import Person from './components/Person'
 import Header from './components/Header'
 import phonebook from './services/phonebook'
 
-const url ='http://localhost:3001/persons'
-
 const Added = (props) => {
   const format = {
     display: 'block',
