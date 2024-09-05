@@ -79,6 +79,13 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
+NODEMON FOR CONTINOUSLY TESTING WITH EXPRESSJS AND NODEJS
+npm install --save-dev nodemon
+Add this in script"
+      "start": "node index.js",
+      "dev": "nodemon index.js",
+npm run dev
+
 
 ABOUT EXPRESS.JSON() AND EXPRESS.URENCODED(), MIDDLEWARE EXPLAINATION
 https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded
