@@ -36,13 +36,11 @@ morgan.token('body', (req) =>{
 
 app.use(morgan(':method :url :status :res[content-size] :response-time ms :body'))
 
+
+
 app.get('/api/persons',(req, res)=>{
     res.json(persons)
 })
-
-
-
-
 
 app.get('/info', (req, res) => {
     let newDate = new Date
