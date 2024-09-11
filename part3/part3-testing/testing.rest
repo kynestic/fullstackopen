@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/notes
+PUT http://localhost:3001/api/notes/66dc45c57e02dac8c7343770
 Content-Type: application/json
 
 {
-    "content": "HTML is suck",
+    "content": "HTML is trash",
     "important": false
 }
