@@ -6,8 +6,21 @@ mongoose.set('strictQuery', false)
 mongoose.connect(process.env.URI)
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {
+      type: String,
+      minLength: 3,
+      required: true
+    },
+    number: {
+      type: String,
+      validate: {
+        validator: (v) => {
+          return /^\d{2,3}-\d+$/.test(v)
+        },
+        message: props => `${props.value} is not a valid phone number! Format should be XX-XXXXXXX or XXX-XXXXXXXX`
+      },
+      required: true
+    },
 })
 
 personSchema.set('toJSON', {

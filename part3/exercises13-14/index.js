@@ -80,6 +80,7 @@ app.post('/api/persons', (req, res, next) => {
                 .then(result => {
                     res.status(200).json(newPerson)
                 })
+                .catch(error => next(error))
         })
         .catch(error => next(error))
 
@@ -94,7 +95,7 @@ app.put('/api/persons/:id', (req, res, next) => {
     const newPerson = req.body
 
     Person
-        .findByIdAndUpdate(id, newPerson, {new: true})
+        .findByIdAndUpdate(id, newPerson, {new: true, runValidators: true, context: 'query'})
         .then(result => {
             res.status(200).end(JSON.stringify(newPerson))
         })
@@ -106,7 +107,12 @@ app.put('/api/persons/:id', (req, res, next) => {
 const errorHandler = (error, request, response, next) => {
     console.log("Error throw!");
     console.log(error.message);
+    if (error.name === 'ValidationError'){
+        return response.status(400).json({error: error.message})
+    }
 }
+
+
 app.use(errorHandler)
 
 

@@ -79,15 +79,16 @@ const App = () => {
           .update(newPerson, person.id)
           .then(
             response => {
-              setPersons(persons.map(person => person = person.id === newPerson.id? newPerson: person))
-              setNewName('')
-              setNewNumber('')
-              setNewSearch('')
-              setAddedState(true)
-              setAdded(`Updated ${newPerson.name} with number ${newPerson.number}`)
-              setTimeout(() => setAddedState(false),5000)
-            }
-            )
+              if (response.status === 200){
+                setPersons(persons.map(person => person = person.id === newPerson.id? newPerson: person))
+                setNewName('')
+                setNewNumber('')
+                setNewSearch('')
+                setAddedState(true)
+                setAdded(`Updated ${newPerson.name} with number ${newPerson.number}`)
+                setTimeout(() => setAddedState(false),5000)
+              }               
+          })
         return
       }
     }
@@ -104,6 +105,12 @@ const App = () => {
         setAddedState(true)
         setAdded(`Added ${newPerson.name} with number ${newPerson.number}`)
         setTimeout(() => setAddedState(false),5000)
+      })
+      .catch(result => {
+        const message = result.response.data.error;
+        setErrorState(true)
+        setError(message)
+        setTimeout(() => setErrorState(false),5000)
       })
   }
 
