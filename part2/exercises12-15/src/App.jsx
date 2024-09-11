@@ -108,6 +108,7 @@ const App = () => {
       })
       .catch(result => {
         const message = result.response.data.error;
+        console.log(result);
         setErrorState(true)
         setError(message)
         setTimeout(() => setErrorState(false),5000)
